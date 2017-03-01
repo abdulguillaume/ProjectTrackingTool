@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectTrackingTool.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,6 +9,13 @@ namespace ProjectTrackingTool.Controllers
 {
     public class HomeController : Controller
     {
+        private InMemoryDBContext context;
+
+        public HomeController()
+        {
+            context = new InMemoryDBContext();
+        }
+
         public ActionResult Index()
         {
             return View();
@@ -22,7 +30,9 @@ namespace ProjectTrackingTool.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            TaskPriority atask = context.Set<TaskPriority>().Find(1);
+
+            ViewBag.Message = atask.Priority_Name;//"Your contact page.";
 
             return View();
         }

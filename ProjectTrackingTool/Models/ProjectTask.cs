@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 
 namespace ProjectTrackingTool.Models
 {
-    class ProjectTask
+    public class ProjectTask
     {
+        [Key]
         public int Task_Id { get; set; }
 
         public string Task_Title { get; set; }
