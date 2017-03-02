@@ -21,18 +21,11 @@ namespace ProjectTrackingTool.Controllers
             return View();
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
         public ActionResult Contact()
         {
-            TaskPriority atask = context.Set<TaskPriority>().Find(1);
+            //TaskPriority atask = context.Set<TaskPriority>().Find(1);
 
-            ViewBag.Message = atask.Priority_Name;//"Your contact page.";
+            ViewBag.Message = "In case of any issue.";//atask.Priority_Name;
 
             return View();
         }

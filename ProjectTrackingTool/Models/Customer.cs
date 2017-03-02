@@ -17,7 +17,7 @@ namespace ProjectTrackingTool.Models
 
         public string Contact_Name { get; set; }
 
-        public List<ContactType> Contact_Type { get; set; }
+        public List<ContactType> Contact_Types { get; set; }
 
 
     }

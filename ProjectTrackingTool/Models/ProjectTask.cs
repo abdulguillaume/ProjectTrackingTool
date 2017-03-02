@@ -13,8 +13,6 @@ namespace ProjectTrackingTool.Models
 
         public string Task_Title { get; set; }
 
-        public Project Link_To_Project { get; set; }
-
         public DateTime Start_Date { get; set; }
 
         public DateTime Target_End_Date { get; set; }
