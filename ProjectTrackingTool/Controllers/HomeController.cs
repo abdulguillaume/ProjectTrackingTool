@@ -23,9 +23,9 @@ namespace ProjectTrackingTool.Controllers
 
         public ActionResult Contact()
         {
-            //TaskPriority atask = context.Set<TaskPriority>().Find(1);
-
-            ViewBag.Message = "In case of any issue.";//atask.Priority_Name;
+            TaskPriority atask = context.Set<TaskPriority>().Find(1);
+            var t = atask.Priority_Name;
+            ViewBag.Message = "In case of any issue.";
 
             return View();
         }
