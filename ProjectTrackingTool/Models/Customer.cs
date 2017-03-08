@@ -26,7 +26,10 @@ namespace ProjectTrackingTool.Models
 
         internal void addContactInfo(List<ContactInfo> info)
         {
-            Contact_Info = info;
+            if (Contact_Info == null)
+                Contact_Info = info;
+            else
+                Contact_Info.AddRange(info);
         }
     }
 }
