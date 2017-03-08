@@ -1,0 +1,140 @@
+﻿@model ProjectTrackingTool.Models.Customer
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>VM_Customer</h4>
+        <hr />
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Customer_Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Customer_Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Customer_Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <table>
+                    <tr>
+                        @{
+                            List<ProjectTrackingTool.Models.CustomerType> customer_types = ViewBag.CustomerTypes;
+
+                            foreach (var type in customer_types)
+                            { 
+                                <td>
+                                    <input type="checkbox" name="selectedCustomerType" value="@type.Customer_Type_Id" /> @type.Customer_Type_Name
+                                </td>
+                            }
+                        }
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Contact_Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Contact_Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Contact_Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <fieldset>
+                    <header>Contact Information</header>
+                    <table id="contact-info" class="table">
+                        <tr>
+                            <th>Type</th>
+                            <th>Info.</th>
+                            <th><a href="#" id="add">+</a></th>
+                        </tr>
+                    </table>
+                </fieldset>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<table id="contact-info-hidden">
+    <tr>
+        <td>
+            <select name="selectedContactType">
+                @{
+                    List<ProjectTrackingTool.Models.ContactType> contact_types = ViewBag.ContactTypes;
+                    <option>--select--</option>
+                    foreach (var type in contact_types)
+                    {
+                        <option value="@type.Contact_Type_Id" /> @type.Contact_Type_Name
+                    }
+                }
+            </select>
+        </td>
+        <td>
+            <input type="text" name="inputContactInfo" />
+        </td>
+        <td><a href="#" class="rem">-</a></td>
+    </tr>
+</table>
+
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+@*<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#contact-info-hidden").hide();
+
+        $("input:checkbox").click(function () {
+            var group = "input:checkbox[name='" + $(this).attr("name") + "']";
+            $(group).prop("checked", false);
+            $(this).prop("checked", true);
+        });
+
+        $("#add").click(function () {
+            $('#contact-info-hidden tbody>tr:last').clone(true).insertAfter('#contact-info tbody>tr:last');
+            return false;
+        });
+
+        $("#rem").click(function () {
+            $(this).closest("tr").remove();
+            return false;
+        });
+
+    });
+
+</script>*@

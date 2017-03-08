@@ -1,0 +1,79 @@
+﻿@model IEnumerable<ProjectTrackingTool.Models.Customer>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Customer_Name)
+        </th>
+        <th>
+            Customer Type
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Contact_Name)
+        </th>
+
+        <th>
+            Contact Information
+        </th>
+        <th></th>
+    </tr>
+    
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer_Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer_Type.Customer_Type_Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Contact_Name)
+        </td>
+        <td>
+            <ul>
+                @foreach (var info_item in item.Contact_Info)
+                {
+                    <li>
+                        @Html.DisplayFor(modelItem => info_item.type.Contact_Type_Name) ->
+                         
+                        @Html.DisplayFor(modelItem =>info_item.detail)
+                    </li>
+                    
+                }
+            </ul>
+        </td>         
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Customer_Id }) |
+            @*@Html.ActionLink("Delete", "Delete", new { id=item.Customer_Id })*@
+            <a href="#" class="del_customer" id="@item.Customer_Id" >Delete</a>
+</td>
+    </tr>
+}
+
+</table>
+
+@*<script>
+    var customers = {};
+
+    for (var item in @Model)
+    { 
+        customers[item.Customer_Id] = {
+            name: item.Customer_Name,
+            type: item.Customer_Type.Customer_Type_Name,
+            contact: item.Contact_Name
+        }
+    }
+
+</script>*@
+
+
