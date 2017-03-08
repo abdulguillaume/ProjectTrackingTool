@@ -20,7 +20,7 @@ namespace ProjectTrackingTool
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             //model first approach
-            Database.SetInitializer<InMemoryDBContext>(new InMemoryDBContextInitializer());
+            Database.SetInitializer<ProjectContext>(new ProjectContextInitializer());
         }
     }
 }

@@ -53,3 +53,7 @@ c:\users\abdul\documents\visual studio 2013\Projects\ProjectTrackingTool\Project
 c:\users\abdul\documents\visual studio 2013\Projects\ProjectTrackingTool\ProjectTrackingTool\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 c:\users\abdul\documents\visual studio 2013\Projects\ProjectTrackingTool\ProjectTrackingTool\obj\Debug\ProjectTrackingTool.dll
 c:\users\abdul\documents\visual studio 2013\Projects\ProjectTrackingTool\ProjectTrackingTool\obj\Debug\ProjectTrackingTool.pdb
+C:\Users\Abdul\documents\visual studio 2013\Projects\ProjectTrackingTool\ProjectTrackingTool\bin\Castle.Core.dll
+C:\Users\Abdul\documents\visual studio 2013\Projects\ProjectTrackingTool\ProjectTrackingTool\bin\Moq.dll
+C:\Users\Abdul\documents\visual studio 2013\Projects\ProjectTrackingTool\ProjectTrackingTool\bin\Castle.Core.xml
+C:\Users\Abdul\documents\visual studio 2013\Projects\ProjectTrackingTool\ProjectTrackingTool\bin\Moq.xml

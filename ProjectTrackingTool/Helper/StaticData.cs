@@ -8,14 +8,14 @@ namespace ProjectTrackingTool.Helper
 {
     public class StaticData
     {
-        InMemoryDBContext context;
+        ProjectContext context;
 
         List<ContactType> contact_types;
         List<CustomerType> customer_types;
         List<TaskPriority> task_priorities;
         List<TaskStatus> task_status;
 
-        public StaticData(InMemoryDBContext context)
+        public StaticData(ProjectContext context)
         {
             this.context = context;
 

@@ -1,5 +1,6 @@
 ﻿using ProjectTrackingTool.Helper;
 using ProjectTrackingTool.Models;
+using ProjectTrackingTool.Repository;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -11,20 +12,19 @@ namespace ProjectTrackingTool.Controllers
 {
     public class CustomerController : Controller
     {
-        private InMemoryDBContext context;
-
-        private StaticData static_data;
+        private UnitOfWork unitOfWork;
 
         public CustomerController()
         {
-            context = new InMemoryDBContext();
-            static_data = new StaticData(context);
+            unitOfWork = new UnitOfWork(
+                    new ProjectContext()
+                );
         }
 
         // GET: Customer
         public ActionResult Index()
         {
-            var customers = context.customers;
+            var customers = unitOfWork.customers.GetAll();
            // Response.ContentType = "text/HTML";
             return View(customers);
         }
@@ -32,7 +32,7 @@ namespace ProjectTrackingTool.Controllers
         // GET: Customer/Details/5
         public ActionResult Details(int id)
         {
-            var customer = context.customers.Where(x => x.Customer_Id==id).FirstOrDefault();
+            var customer = unitOfWork.customers.Find(x => x.Customer_Id == id).FirstOrDefault();
 
             return View(customer);
         }
@@ -40,8 +40,8 @@ namespace ProjectTrackingTool.Controllers
         // GET: Customer/Create
         public ActionResult Create()
         {
-            ViewBag.CustomerTypes = static_data.getCustomerTypes();
-            ViewBag.ContactTypes = static_data.getContactTypes();
+            ViewBag.CustomerTypes = unitOfWork.customerTypes.GetAll();//.getCustomerTypes();
+            ViewBag.ContactTypes = unitOfWork.contactTypes.GetAll();//.getContactTypes();
 
             return View();
         }
@@ -50,8 +50,8 @@ namespace ProjectTrackingTool.Controllers
         [HttpPost]
         public ActionResult Create(Customer customer, int[] selectedCustomerType, int[] selectedContactType, string[] inputContactInfo)
         {
-            ViewBag.CustomerTypes = static_data.getCustomerTypes();
-            ViewBag.ContactTypes = static_data.getContactTypes();
+            ViewBag.CustomerTypes = unitOfWork.customerTypes.GetAll();//.getCustomerTypes();
+            ViewBag.ContactTypes = unitOfWork.contactTypes.GetAll();//.getContactTypes();
 
             int[] contactInfoID = Enumerable.Repeat(0, selectedContactType.Length).ToArray();
 
@@ -61,10 +61,10 @@ namespace ProjectTrackingTool.Controllers
                 if (ModelState.IsValid)
                 {
 
-                    addDepToCustomer(context, customer, selectedCustomerType, selectedContactType, contactInfoID, inputContactInfo);
+                    addDepToCustomer(unitOfWork, customer, selectedCustomerType, selectedContactType, contactInfoID, inputContactInfo);
 
-                    context.customers.Add(customer);
-                    context.SaveChanges();
+                    unitOfWork.customers.Add(customer);
+                    unitOfWork.Complete();
                     return RedirectToAction("Index");
                 }
                 
@@ -77,12 +77,12 @@ namespace ProjectTrackingTool.Controllers
             return View(customer);
         }
 
-        private void addDepToCustomer(DbContext ctxt, Customer customer, int[] selectedCustomerType, int[] selectedContactType, int[] contactInfoID, string[] inputContactInfo)
+        private void addDepToCustomer(UnitOfWork ctxt, Customer customer, int[] selectedCustomerType, int[] selectedContactType, int[] contactInfoID, string[] inputContactInfo)
         {
             //attach a new customer type only if it has changed.
             if (customer.Customer_Type==null || customer.Customer_Type.Customer_Type_Id != selectedCustomerType[0])
             {
-                CustomerType customer_type = static_data.getCustomerTypes().Where(x => x.Customer_Type_Id == selectedCustomerType[0]).FirstOrDefault();
+                CustomerType customer_type = unitOfWork.customerTypes.Get(selectedCustomerType[0]);//.getCustomerTypes().Where(x => x.Customer_Type_Id == selectedCustomerType[0]).FirstOrDefault();
                 customer.addCustomerType(customer_type);
             }
             
@@ -92,9 +92,13 @@ namespace ProjectTrackingTool.Controllers
             {
                 Func<ContactInfo, bool> lambda = x => x.Contact_Info_Id > 0 && !contactInfoID.Contains(x.Contact_Info_Id);
 
-                ((InMemoryDBContext)ctxt).contact_info.RemoveRange(
+                ctxt.contactInfo.RemoveRange(
                         customer.Contact_Info.Where(lambda)
                     );
+
+                //((ProjectContext)ctxt).contact_info.RemoveRange(
+                //        customer.Contact_Info.Where(lambda)
+                //    );
 
             }      
 
@@ -105,7 +109,7 @@ namespace ProjectTrackingTool.Controllers
             //and can be updated anytime.
             List<ContactInfo> info = new List<ContactInfo>();
 
-            ContactType contact_type_ = static_data.getContactTypes().Where(x => x.Contact_Type_Id == selectedContactType[cnt]).FirstOrDefault();
+            ContactType contact_type_ = unitOfWork.contactTypes.Get(selectedContactType[cnt]);//.getContactTypes().Where(x => x.Contact_Type_Id == selectedContactType[cnt]).FirstOrDefault();
 
             foreach (var contact_type in selectedContactType)
             {
@@ -148,10 +152,10 @@ namespace ProjectTrackingTool.Controllers
         // GET: Customer/Edit/5
         public ActionResult Edit(int id)
         {
-            var customer = context.customers.Where(x => x.Customer_Id == id).FirstOrDefault();
+            var customer = unitOfWork.customers.Get(id);//Where(x => x.Customer_Id == id).FirstOrDefault();
 
-            ViewBag.CustomerTypes = static_data.getCustomerTypes();
-            ViewBag.ContactTypes = static_data.getContactTypes();
+            ViewBag.CustomerTypes = unitOfWork.customerTypes.GetAll();//.getCustomerTypes();
+            ViewBag.ContactTypes = unitOfWork.contactTypes.GetAll();//.getContactTypes();
 
             if (customer == null)
             {
@@ -164,10 +168,10 @@ namespace ProjectTrackingTool.Controllers
         [HttpPost]
         public ActionResult Edit(int id, Customer customer, int[] selectedCustomerType, int[] selectedContactType, int[] contactInfoID, string[] inputContactInfo)
         {
-            var customer_ = context.customers.Where(x => x.Customer_Id == id).FirstOrDefault();
+            var customer_ = unitOfWork.customers.Get(id);//.Where(x => x.Customer_Id == id).FirstOrDefault();
 
-            ViewBag.CustomerTypes = static_data.getCustomerTypes();
-            ViewBag.ContactTypes = static_data.getContactTypes();
+            ViewBag.CustomerTypes = unitOfWork.customerTypes.GetAll();//.getCustomerTypes();
+            ViewBag.ContactTypes = unitOfWork.contactTypes.GetAll();//.getContactTypes();
 
             var contact_info = customer.Contact_Info;
 
@@ -180,10 +184,10 @@ namespace ProjectTrackingTool.Controllers
 
                     customer_.Contact_Name = customer.Contact_Name;
            
-                    addDepToCustomer(context,customer_, selectedCustomerType, selectedContactType, contactInfoID, inputContactInfo);
+                    addDepToCustomer(unitOfWork,customer_, selectedCustomerType, selectedContactType, contactInfoID, inputContactInfo);
 
-                    UpdateModel(customer_);
-                    context.SaveChanges();
+                    //UpdateModel(customer_);
+                    unitOfWork.Complete();
 
                     return RedirectToAction("Index");
                 }
@@ -200,7 +204,7 @@ namespace ProjectTrackingTool.Controllers
         // GET: Customer/Delete/5
         public ActionResult Delete(int id)
         {
-            var customer = context.customers.Where(x => x.Customer_Id == id).FirstOrDefault();
+            var customer = unitOfWork.customers.Get(id);//(x => x.Customer_Id == id).FirstOrDefault();
 
             if (customer == null)
             {
@@ -213,7 +217,7 @@ namespace ProjectTrackingTool.Controllers
         [HttpPost, ActionName("Delete")]
         public JsonResult DeleteConfirmed(int id)//, Customer customer)
         {
-            Customer customer = context.customers.Where(x => x.Customer_Id == id).FirstOrDefault();
+            Customer customer = unitOfWork.customers.Get(id);//Where(x => x.Customer_Id == id).FirstOrDefault();
             
             bool result;
 
@@ -222,9 +226,9 @@ namespace ProjectTrackingTool.Controllers
                 // TODO: Add delete logic here
                 //if (ModelState.IsValid)
                 //{
-                    context.customers.Remove(customer);
+                unitOfWork.customers.Remove(customer);
 
-                    context.SaveChanges();
+                unitOfWork.Complete();
 
                     result = true;
                     //return RedirectToAction("Index");

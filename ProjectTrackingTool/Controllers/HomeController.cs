@@ -9,11 +9,11 @@ namespace ProjectTrackingTool.Controllers
 {
     public class HomeController : Controller
     {
-        private InMemoryDBContext context;
+        private ProjectContext context;
 
         public HomeController()
         {
-            context = new InMemoryDBContext();
+            context = new ProjectContext();
         }
 
         public ActionResult Index()
