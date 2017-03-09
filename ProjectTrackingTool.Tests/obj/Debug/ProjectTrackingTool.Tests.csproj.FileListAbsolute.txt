@@ -40,3 +40,7 @@ C:\Users\Abdul\Documents\Visual Studio 2013\Projects\ProjectTrackingTool\Project
 C:\Users\Abdul\Documents\Visual Studio 2013\Projects\ProjectTrackingTool\ProjectTrackingTool.Tests\bin\Debug\Microsoft.Owin.Host.SystemWeb.xml
 C:\Users\Abdul\Documents\Visual Studio 2013\Projects\ProjectTrackingTool\ProjectTrackingTool.Tests\obj\Debug\ProjectTrackingTool.Tests.dll
 C:\Users\Abdul\Documents\Visual Studio 2013\Projects\ProjectTrackingTool\ProjectTrackingTool.Tests\obj\Debug\ProjectTrackingTool.Tests.pdb
+C:\Users\Abdul\documents\visual studio 2013\Projects\ProjectTrackingTool\ProjectTrackingTool.Tests\bin\Debug\Castle.Core.dll
+C:\Users\Abdul\documents\visual studio 2013\Projects\ProjectTrackingTool\ProjectTrackingTool.Tests\bin\Debug\Moq.dll
+C:\Users\Abdul\documents\visual studio 2013\Projects\ProjectTrackingTool\ProjectTrackingTool.Tests\bin\Debug\Castle.Core.xml
+C:\Users\Abdul\documents\visual studio 2013\Projects\ProjectTrackingTool\ProjectTrackingTool.Tests\bin\Debug\Moq.xml

@@ -17,7 +17,7 @@ namespace ProjectTrackingTool.Models
 
         public string Contact_Name { get; set; }
 
-        public virtual List<ContactInfo> Contact_Info { get; private set; }
+        public virtual List<ContactInfo> Contact_Info { get; set;}// private set; }
 
         internal void addCustomerType(CustomerType customer_type)
         {

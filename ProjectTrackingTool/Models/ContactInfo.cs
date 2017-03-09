@@ -11,7 +11,7 @@ namespace ProjectTrackingTool.Models
         [Key]
         public int Contact_Info_Id { get; set; }
 
-        public ContactType type { get; private set; }
+        public ContactType type { get; set; }//private set; }
         public string detail { get; set; }
 
 

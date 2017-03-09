@@ -3,6 +3,8 @@
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    List<ProjectTrackingTool.Models.ContactType> contact_types = ViewBag.ContactTypes;
 }
 
 <h2>Edit</h2>
@@ -88,7 +90,19 @@
                             <tr>
                                 <td>
                                     <select name="selectedContactType">
-                                        <option value="@contact_info.type.Contact_Type_Id">@contact_info.type.Contact_Type_Name</option>
+                                    
+                                        @{
+                            //List<ProjectTrackingTool.Models.ContactType> contact_types = ViewBag.ContactTypes;
+                            
+                            foreach (var type in contact_types)
+                            {
+                                <option value="@type.Contact_Type_Id"
+                                        @(Html.Raw(@contact_info.type.Contact_Type_Id == @type.Contact_Type_Id ? "selected" : ""))
+                                         /> @type.Contact_Type_Name
+                            }
+
+                                    }
+                                        @*<option value="@contact_info.type.Contact_Type_Id">@contact_info.type.Contact_Type_Name</option>*@
                                     </select>
                                 </td>
                                 <td>
@@ -117,7 +131,7 @@
         <td>
             <select name="selectedContactType">
                 @{
-                    List<ProjectTrackingTool.Models.ContactType> contact_types = ViewBag.ContactTypes;
+                    
                     <option>--select--</option>
                     foreach (var type in contact_types)
                     {
