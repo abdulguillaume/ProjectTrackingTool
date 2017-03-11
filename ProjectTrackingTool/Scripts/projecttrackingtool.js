@@ -1,5 +1,46 @@
 ﻿$(document).ready(function () {
 
+    //$("#customer_form").validate();
+
+    //$("form .abdul-input").on("keypress", function () {
+        
+    //    console.log("test");
+
+    //    if (!$(this).val())
+    //        $(this).find("span.span_3").show();
+    //    else
+    //        $(this).find("span.span_3").hide();
+    //});
+
+    
+ /*   $("form").submit(function (e) {
+
+        if (!$(this).valid())
+        {
+            e.preventDefault();
+        }*/
+        
+        //var my_inputs = $(this).find(".input_1");
+
+        //////return false;
+        //var w = 0;
+
+        //for (var i = 0; i < my_inputs.length; i++)
+        //{
+        //    if ($(my_inputs[i]).val().trim().length == 0) {
+
+        //        $(my_inputs[i]).addClass('input-validation-error');
+
+        //        //$(this).find("span.span_3").show();
+        //        w = 1;
+        //    }
+        //}
+
+        //if (w == 1) e.preventDefault();
+  //  });
+
+
+
     $("#contact-info-hidden").hide();
 
     $("input:checkbox").click(function () {
@@ -8,9 +49,49 @@
         $(this).prop("checked", true);
     });
 
-    $("#add").click(function () {
-        $('#contact-info-hidden tbody>tr:last').clone(true).insertAfter('#contact-info tbody>tr:last');
-        return false;
+    //$("#add").click(function () {
+    //    $('#contact-info-hidden tbody>tr:last').clone(true).insertAfter('#contact-info tbody>tr:last');
+    //    return false;
+    //});
+
+    $("#add").click(function (e) {
+        e.preventDefault();
+       // var tmp0 = $("#contact-info > tbody > tr");
+        //alert(tmp0.length);
+        var index = $("#contact-info tbody>tr:last").index();
+
+        var last = $('#contact-info-hidden tbody>tr:last').clone(true).insertAfter('#contact-info tbody>tr:last');
+       
+        var selectList = last.find("select");
+        selectList.attr("id", "Contact_Info_"+index+"__type.Contact_Type_Id"); 
+        selectList.attr("name", "Contact_Info[" + index + "].type.Contact_Type_Id");
+
+        var valSelectField = last.find("span.span_1");
+        valSelectField.attr("data-valmsg-for", "Contact_Info[" + index + "].type.Contact_Type_Id"); //ok
+        //valSelectField.append("<span for='Contact_Info_" + index + "__.detail' class='span_2'>**</span>")
+
+        //valSelectField.find("span.span_2").hide();
+
+        var inputField = last.find("input");
+        //inputField.addClass("abdul-input");
+        inputField.attr("id", "Contact_Info_" + index + "__detail");  //id="Contact_Info_0__Contact_Info_Id" name="Contact_Info[0].Contact_Info_Id"
+        inputField.attr("name", "Contact_Info[" + index + "].detail");
+
+        var valInputField = last.find("span.span_3");
+        valInputField.attr("data-valmsg-for", "Contact_Info[" + index + "].detail");
+        //valInputField.append("<span for='Contact_Info_" + index + "__.detail' class='span_4'>Field is required.</span>")
+
+        //$("#Contact_Info_" + index + "__detail").validate();
+
+        $.validator.unobtrusive.parseDynamicContent("#customer_form");
+
+        //$("customer_form").removeData("validator");
+        //$("customer_form").removeData("unobtrusiveValidation");
+        //$.validator.unobtrusive.parse("customer_form");
+        
+        //valInputField.find("span.span_4").hide();
+
+        //return false;
     });
 
     $(".rem").click(function () {
@@ -33,9 +114,6 @@
 
         if (response == true)
         {
-
-            //tr.toggle();
- 
             $.ajax({
                 type: "POST",
                 //contentType: "application/json; charset=utf-8",
@@ -52,7 +130,7 @@
             });
         }
 
-        //tr_pos.parent
+
         return false;
     });
 
@@ -60,3 +138,4 @@
 
 
 //https://www.codeproject.com/Articles/996400/WebGrid-Inline-Edit-and-Delete-of-data-in-ASP-NET
+// <span class="field-validation-valid text-danger" data-valmsg-for="Contact_Info[1].detail" data-valmsg-replace="true"></span>

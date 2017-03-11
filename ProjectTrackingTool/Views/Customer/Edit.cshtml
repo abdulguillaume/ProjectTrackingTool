@@ -1,16 +1,22 @@
 ﻿@model ProjectTrackingTool.Models.Customer
+@using ProjectTrackingTool.Models
 
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
     List<ProjectTrackingTool.Models.ContactType> contact_types = ViewBag.ContactTypes;
+
+    List<CustomerType> customer_types = ViewBag.CustomerTypes;
 }
 
 <h2>Edit</h2>
 
 
-@using (Html.BeginForm())
+@using (
+    //Html.BeginForm()
+    Html.BeginForm("Edit", "Customer", FormMethod.Post, new { id = "customer_form" })
+    )
 {
     @Html.AntiForgeryToken()
     
@@ -31,38 +37,54 @@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
 
-                
+                <fieldset>
+                    <header>Customer type</header>
 
-                @*
 
-                @Html.HiddenFor(model =>@Html.HiddenFor(model => model.Customer_Type.Customer_Type_Id) model.Customer_Type.Customer_Type_Name)
+                    @{
 
-                @for(int cnt=0; cnt < Model.Contact_Info.Count; cnt++)
-                {
-                    @Html.HiddenFor(model => model.Contact_Info[cnt].Contact_Info_Id)
-                    @Html.HiddenFor(model => model.Contact_Info[cnt].type.Contact_Type_Id)
-
-                    <input type="hidden" name="Contact_Info[@cnt].Contact_Info_Id" value="@Model.Contact_Info[cnt].Contact_Info_Id" />
-                }*@
-
- 
-                <table>
-                    <tr>
-                        @{
-                            List<ProjectTrackingTool.Models.CustomerType> customer_types = ViewBag.CustomerTypes;
-                            
                             foreach (var type in customer_types)
                             {
-                                <td>
-                                    <input type="checkbox" name="selectedCustomerType" value="@type.Customer_Type_Id"
-                                           @(Html.Raw(Model.Customer_Type.Customer_Type_Id == @type.Customer_Type_Id ? "checked=\"checked\"" : ""))
-                                            /> @type.Customer_Type_Name
-                                </td>
+                                    @Html.RadioButtonFor(model => model.Customer_Type.Customer_Type_Id, @type.Customer_Type_Id)
+                                                @: @type.Customer_Type_Name <br />
                             }
+
+                    }
+
+                        @Html.ValidationMessageFor(model => model.Customer_Type.Customer_Type_Id, "", new { @class = "text-danger" })
+
+                    @*
+
+            @Html.HiddenFor(model =>@Html.HiddenFor(model => model.Customer_Type.Customer_Type_Id) model.Customer_Type.Customer_Type_Name)
+
+            @for(int cnt=0; cnt < Model.Contact_Info.Count; cnt++)
+            {
+                @Html.HiddenFor(model => model.Contact_Info[cnt].Contact_Info_Id)
+                @Html.HiddenFor(model => model.Contact_Info[cnt].type.Contact_Type_Id)
+
+                <input type="hidden" name="Contact_Info[@cnt].Contact_Info_Id" value="@Model.Contact_Info[cnt].Contact_Info_Id" />
+            }*@
+
+
+                    @*<table>
+                <tr>
+                    @{
+                        List<ProjectTrackingTool.Models.CustomerType> customer_types = ViewBag.CustomerTypes;
+
+                        foreach (var type in customer_types)
+                        {
+                            <td>
+                                <input type="checkbox" name="selectedCustomerType" value="@type.Customer_Type_Id"
+                                       @(Html.Raw(Model.Customer_Type.Customer_Type_Id == @type.Customer_Type_Id ? "checked=\"checked\"" : ""))
+                                        /> @type.Customer_Type_Name
+                            </td>
                         }
-                    </tr>
-                </table>
-            </div>
+                    }
+                </tr>
+            </table>*@
+
+                    </fieldset>
+</div>
         </div>
 
 
@@ -85,29 +107,20 @@
                             <th>Info.</th>
                             <th><a href="#" id="add">+</a></th>
                         </tr>
-                        @foreach (var contact_info in Model.Contact_Info)
+                        
+                        @for (var i = 0; Model.Contact_Info != null && i < Model.Contact_Info.Count; i++)
                         {
                             <tr>
                                 <td>
-                                    <select name="selectedContactType">
-                                    
-                                        @{
-                            //List<ProjectTrackingTool.Models.ContactType> contact_types = ViewBag.ContactTypes;
-                            
-                            foreach (var type in contact_types)
-                            {
-                                <option value="@type.Contact_Type_Id"
-                                        @(Html.Raw(@contact_info.type.Contact_Type_Id == @type.Contact_Type_Id ? "selected" : ""))
-                                         /> @type.Contact_Type_Name
-                            }
 
-                                    }
-                                        @*<option value="@contact_info.type.Contact_Type_Id">@contact_info.type.Contact_Type_Name</option>*@
-                                    </select>
+                               @Html.DropDownListFor(model => model.Contact_Info[i].type.Contact_Type_Id,
+                                        contact_types.Select( x => new SelectListItem() { Value=x.Contact_Type_Id.ToString(), Text=x.Contact_Type_Name}))
+                                 @Html.ValidationMessageFor(model => model.Contact_Info[i].type.Contact_Type_Id, "", new { @class = "text-danger" })                                               
                                 </td>
                                 <td>
-                                    <input type="hidden" name="contactInfoID" value="@contact_info.Contact_Info_Id" />
-                                    <input type="text" name="inputContactInfo" value="@contact_info.detail" />
+                                    @Html.EditorFor(model=> model.Contact_Info[i].detail)
+                                    @*<input type="text" name="inputContactInfo" value="@contact_info.detail" />*@
+                                    @Html.ValidationMessageFor(model => model.Contact_Info[i].detail, "", new { @class = "text-danger" })
                                 </td>
                                 <td><a href="#" class="rem">-</a></td>
                             </tr>
@@ -129,29 +142,32 @@
 <table id="contact-info-hidden">
     <tr>
         <td>
-            <select name="selectedContactType">
+            <select class="valid" data-val="true" data-val-required="*Required*" value="">
                 @{
-                    
-                    <option>--select--</option>
+
+                    <option value="">--select--</option>
                     foreach (var type in contact_types)
                     {
                         <option value="@type.Contact_Type_Id" /> @type.Contact_Type_Name
                     }
                 }
             </select>
+            <span class="span_1 field-validation-valid text-danger" data-valmsg-for="" data-valmsg-replace="true"></span>  
         </td>
         <td>
-            <input type="hidden" name="contactInfoID" value="0" />
-            <input type="text" name="inputContactInfo" />
+            <input type="text" class="text-box single-line" data-val="true" data-val-required="The Contact Info field is required" value="" />
+            
+            <span class="span_3 text-danger field-validation-valid" data-valmsg-for="" data-valmsg-replace="true"></span> 
         </td>
         <td><a href="#" class="rem">-</a></td>
     </tr>
 </table>
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }

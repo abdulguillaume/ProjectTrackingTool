@@ -1,14 +1,21 @@
 ﻿@model ProjectTrackingTool.Models.Customer
+@using ProjectTrackingTool.Models
 
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    List<ContactType> contact_types = ViewBag.ContactTypes;
+    List<CustomerType> customer_types = ViewBag.CustomerTypes;
 }
 
 <h2>Create</h2>
 
 
-@using (Html.BeginForm()) 
+@using (
+    //Html.BeginForm()
+    Html.BeginForm("Create", "Customer", FormMethod.Post, new { id = "customer_form" })
+    )
 {
     @Html.AntiForgeryToken()
     
@@ -27,22 +34,50 @@
             </div>
         </div>
 
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <table>
-                    <tr>
+                <fieldset>
+                    <header>Customer type</header>
+
+                        
                         @{
-                            List<ProjectTrackingTool.Models.CustomerType> customer_types = ViewBag.CustomerTypes;
 
                             foreach (var type in customer_types)
-                            { 
+                            {
+                                @Html.RadioButtonFor(model => model.Customer_Type.Customer_Type_Id, @type.Customer_Type_Id)
+                                @: @type.Customer_Type_Name <br />
+                            }
+                            
+                        }
+
+                    @Html.ValidationMessageFor(model => model.Customer_Type.Customer_Type_Id, "", new { @class = "text-danger" })
+
+                    @*@{List<ContactType>
+                        contact_types = ViewBag.ContactTypes;
+}
+                        @Html.DropDownListFor(model => model.Contact_Info[0].Contact_Info_Id, contact_types.Select(x=>new SelectListItem(){Text=x.Contact_Type_Name, Value=x.Contact_Type_Id.ToString()}), "--select--" )
+
+                        @Html.ValidationMessageFor(model => model.Customer_Type.Customer_Type_Id, "", new { @class = "text-danger" })*@
+
+                        @*<table>
+                <tr class="form-control text-box single-line">
+                    @{
+                        List<ProjectTrackingTool.Models.CustomerType> customer_types = ViewBag.CustomerTypes;
+
+                        foreach (var type in customer_types)
+                        {
                                 <td>
                                     <input type="checkbox" name="selectedCustomerType" value="@type.Customer_Type_Id" /> @type.Customer_Type_Name
                                 </td>
-                            }
                         }
-                    </tr>
-                </table>
+                    }
+
+                </tr>
+
+            </table>*@
+                        @*<span class="field-validation-valid text-danger" data-valmsg-for="Customer_Type" data-valmsg-replace="true"></span>*@
+</fieldset>
             </div>
         </div>
 
@@ -74,6 +109,8 @@
             </div>
         </div>
 
+
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />
@@ -82,13 +119,14 @@
     </div>
 }
 
-<table id="contact-info-hidden">
+@*<table id="contact-info-hidden">
     <tr>
         <td>
-            <select name="selectedContactType">
+            <select>
                 @{
                     List<ProjectTrackingTool.Models.ContactType> contact_types = ViewBag.ContactTypes;
                     <option>--select--</option>
+                    
                     foreach (var type in contact_types)
                     {
                         <option value="@type.Contact_Type_Id" /> @type.Contact_Type_Name
@@ -97,13 +135,37 @@
             </select>
         </td>
         <td>
-            <input type="text" name="inputContactInfo" />
+            <input type="text" class="text-box single-line input-validation-error" data-val="true" data-val-required="Field is required." />
+            <span class="span_3 text-danger field-validation-error" data-valmsg-for="" data-valmsg-replace="true">
+            </span>
+        </td>
+        <td><a href="#" class="rem">-</a></td>
+    </tr>
+</table>*@
+
+<table id="contact-info-hidden">
+    <tr>
+        <td>
+            <select class="valid" data-val="true" data-val-required="*Required*" value="">
+                @{
+
+                    <option value="">--select--</option>
+                    foreach (var type in contact_types)
+                    {
+                        <option value="@type.Contact_Type_Id" /> @type.Contact_Type_Name
+                    }
+                }
+            </select>
+            <span class="span_1 field-validation-valid text-danger" data-valmsg-for="" data-valmsg-replace="true"></span>
+        </td>
+        <td>
+            <input type="text" class="text-box single-line" data-val="true" data-val-required="The Contact Info field is required" value="" />
+
+            <span class="span_3 text-danger field-validation-valid" data-valmsg-for="" data-valmsg-replace="true"></span>
         </td>
         <td><a href="#" class="rem">-</a></td>
     </tr>
 </table>
-
-
 
 <div>
     @Html.ActionLink("Back to List", "Index")
@@ -112,29 +174,3 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
-
-@*<script src="~/Scripts/jquery-1.10.2.js"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-
-        $("#contact-info-hidden").hide();
-
-        $("input:checkbox").click(function () {
-            var group = "input:checkbox[name='" + $(this).attr("name") + "']";
-            $(group).prop("checked", false);
-            $(this).prop("checked", true);
-        });
-
-        $("#add").click(function () {
-            $('#contact-info-hidden tbody>tr:last').clone(true).insertAfter('#contact-info tbody>tr:last');
-            return false;
-        });
-
-        $("#rem").click(function () {
-            $(this).closest("tr").remove();
-            return false;
-        });
-
-    });
-
-</script>*@
