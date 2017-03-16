@@ -10,7 +10,8 @@ namespace ProjectTrackingTool
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         // "~/Scripts/jquery-1.10.2.js"));
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/jquery-ui-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*",
@@ -28,7 +29,8 @@ namespace ProjectTrackingTool
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/Content/jquery-ui.css"));
         }
     }
 }

@@ -11,11 +11,13 @@ namespace ProjectTrackingTool.Repository
         ICustomerRepository customers { get; }
         IProjectRepository projects { get; }
 
+
+
         IContactInfoRepository contactInfo { get; }
 
         ITaskPriorityRepository priorities { get; }
         
-        ITaskStatusRepository taskStatus { get; }
+        IAStatusRepository statuses { get; }
 
         IContactTypeRepository contactTypes { get; }
 

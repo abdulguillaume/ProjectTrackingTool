@@ -10,6 +10,7 @@ namespace ProjectTrackingTool.Models
     public class Customer
     {
         [Key]
+        [DisplayName("Customer ID")]
         public int Customer_Id { get; set; }
 
         [Required]

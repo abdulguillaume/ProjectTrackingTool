@@ -19,9 +19,9 @@ namespace ProjectTrackingTool.Models
 
         public DateTime End_Date { get; set; }
 
-        public TaskPriority Priority { get; set; }
+        public APriority Priority { get; set; }
 
-        public TaskStatus Status { get; set; }
+        public AStatus Status { get; set; }
 
         public string Task_Desc { get; set; }
 

@@ -11,22 +11,22 @@ namespace ProjectTrackingTool.Models
         private void Init(ProjectContext context) 
         {
 
-            context.task_priorities.AddRange(
+            context.priorities.AddRange(
                 
-                new List<TaskPriority>{
-                    new TaskPriority { Priority_Id=1, Priority_Name ="Low" },
-                    new TaskPriority { Priority_Id=2, Priority_Name ="Medium" },
-                    new TaskPriority { Priority_Id=1, Priority_Name ="High" }
+                new List<APriority>{
+                    new APriority { Priority_Id=1, Priority_Name ="High", cat=0 },
+                    new APriority { Priority_Id=2, Priority_Name ="Medium", cat=0 },
+                    new APriority { Priority_Id=3, Priority_Name ="Low", cat=0 }
                 }
             );
 
-            context.task_status.AddRange(
+            context.statuses.AddRange(
 
-                new List<TaskStatus>{
-                    new TaskStatus { Status_Id=1, Status_Name ="ToDo" },
-                    new TaskStatus { Status_Id=2, Status_Name ="InProgress" },
-                    new TaskStatus { Status_Id=3, Status_Name ="RFC/Review" },
-                    new TaskStatus { Status_Id=4, Status_Name ="Done" }
+                new List<AStatus>{
+                    new AStatus { Status_Id=1, Status_Name ="ToDo", cat=0 },
+                    new AStatus { Status_Id=2, Status_Name ="InProgress", cat=0 },
+                    new AStatus { Status_Id=3, Status_Name ="RFC/Review", cat=0 },
+                    new AStatus { Status_Id=4, Status_Name ="Done", cat=0 }
                 }
             );
 

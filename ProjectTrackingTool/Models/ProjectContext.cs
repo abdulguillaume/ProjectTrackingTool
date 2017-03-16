@@ -15,9 +15,9 @@ namespace ProjectTrackingTool.Models
 
         public DbSet<ProjectTask> tasks { get; set; }
 
-        public DbSet<TaskPriority> task_priorities { get; set; }
+        public DbSet<APriority> priorities { get; set; }
 
-        public DbSet<TaskStatus> task_status { get; set; }
+        public DbSet<AStatus> statuses { get; set; }
 
         public DbSet<Customer> customers { get; set; }
 

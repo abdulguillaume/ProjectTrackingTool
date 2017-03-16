@@ -9,6 +9,6 @@ namespace ProjectTrackingTool.Repository
 {
     public interface IProjectRepository: IRepository<Project>
     {
-        IEnumerable<Project> GetProjectsByPriority(int pageIndex, int pageSize);
+        IEnumerable<Project> GetProjectsByStatus(int pageIndex, int pageSize);
     }
 }

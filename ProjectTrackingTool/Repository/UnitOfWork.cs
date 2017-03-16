@@ -16,10 +16,11 @@ namespace ProjectTrackingTool.Repository
 
             customers = new CustomerRepository(context);
             contactInfo = new ContactInfoRepository(context);
+            projects = new ProjectRepository(context);
 
             //static data
             priorities = new TaskPriorityRepository(context);
-            taskStatus = new TaskStatusRepository(context);
+            statuses = new AStatusRepository(context);
             customerTypes = new CustomerTypeRepository(context);
             contactTypes = new ContactTypeRepository(context);
         }
@@ -57,7 +58,7 @@ namespace ProjectTrackingTool.Repository
             //get { throw new NotImplementedException(); }
         }
 
-        public ITaskStatusRepository taskStatus
+        public IAStatusRepository statuses
         {
             get;
             private set;

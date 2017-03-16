@@ -12,8 +12,8 @@ namespace ProjectTrackingTool.Helper
 
         List<ContactType> contact_types;
         List<CustomerType> customer_types;
-        List<TaskPriority> task_priorities;
-        List<TaskStatus> task_status;
+        List<APriority> task_priorities;
+        List<AStatus> task_status;
 
         public StaticData(ProjectContext context)
         {
@@ -32,17 +32,17 @@ namespace ProjectTrackingTool.Helper
 
         List<CustomerType> getCustomerTypes_() { return context.customer_types.ToList(); }
 
-        List<TaskPriority> getTaskPriorities_() { return context.task_priorities.ToList(); }
+        List<APriority> getTaskPriorities_() { return context.priorities.ToList(); }
 
-        List<TaskStatus> getTaskStatus_() { return context.task_status.ToList(); }
+        List<AStatus> getTaskStatus_() { return context.statuses.ToList(); }
 
         public List<ContactType> getContactTypes() { return contact_types; }
 
         public List<CustomerType> getCustomerTypes() { return customer_types; }
 
-        public List<TaskPriority> getTaskPriorities() { return task_priorities; }
+        public List<APriority> getTaskPriorities() { return task_priorities; }
 
-        public List<TaskStatus> getTaskStatus() { return task_status; }
+        public List<AStatus> getTaskStatus() { return task_status; }
 
     }
 }

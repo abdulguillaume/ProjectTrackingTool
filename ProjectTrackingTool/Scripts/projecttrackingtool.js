@@ -1,45 +1,10 @@
 ﻿$(document).ready(function () {
 
-    //$("#customer_form").validate();
 
-    //$("form .abdul-input").on("keypress", function () {
-        
-    //    console.log("test");
-
-    //    if (!$(this).val())
-    //        $(this).find("span.span_3").show();
-    //    else
-    //        $(this).find("span.span_3").hide();
-    //});
-
-    
- /*   $("form").submit(function (e) {
-
-        if (!$(this).valid())
-        {
-            e.preventDefault();
-        }*/
-        
-        //var my_inputs = $(this).find(".input_1");
-
-        //////return false;
-        //var w = 0;
-
-        //for (var i = 0; i < my_inputs.length; i++)
-        //{
-        //    if ($(my_inputs[i]).val().trim().length == 0) {
-
-        //        $(my_inputs[i]).addClass('input-validation-error');
-
-        //        //$(this).find("span.span_3").show();
-        //        w = 1;
-        //    }
-        //}
-
-        //if (w == 1) e.preventDefault();
-  //  });
-
-
+    $(".datepicker").datepicker({
+        showOtherMonths: true,
+        selectOtherMonths: true
+    }).attr('readonly', 'readonly');;
 
     $("#contact-info-hidden").hide();
 

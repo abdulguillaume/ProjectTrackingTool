@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ProjectTrackingTool.Repository
 {
-    public interface ITaskPriorityRepository: IRepository<TaskPriority>
+    public interface ITaskPriorityRepository: IRepository<APriority>
     {
     }
 }

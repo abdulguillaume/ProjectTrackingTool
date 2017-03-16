@@ -69,6 +69,9 @@ namespace ProjectTrackingTool.Controllers
             }
             catch
             {
+                ViewBag.CustomerTypes = custTypes;
+                ViewBag.ContactTypes = contTypes;
+
                 return View(customer);
             }
 
